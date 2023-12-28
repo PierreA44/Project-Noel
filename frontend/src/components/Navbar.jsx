@@ -4,7 +4,7 @@ import logo from "../assets/logos/logo1.jpg";
 export default function Navbar() {
   return (
     <nav>
-      <NavLink to="/">
+      <NavLink to="">
         <img src={logo} alt="logo" id="logo" />
       </NavLink>
       <h1>La hotte du Père-Noël</h1>

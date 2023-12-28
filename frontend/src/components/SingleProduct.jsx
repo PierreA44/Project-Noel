@@ -1,3 +1,68 @@
-export default function SingleProduct() {
-  return <h1>Single Product</h1>;
+import axios from "axios";
+import PropTypes from "prop-types";
+import { useEffect } from "react";
+
+export default function SingleProduct({
+  nameProduct,
+  price,
+  category,
+  quantityProduct,
+  manufacturer,
+  isFavorite,
+  id,
+}) {
+  const handleFav = () => {
+    axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`, {
+      name: nameProduct,
+      quantity: quantityProduct - 1,
+      is_fav: 1,
+    });
+  };
+
+  const handleNotFav = () => {
+    axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`, {
+      name: nameProduct,
+      quantity: quantityProduct + 1,
+      is_fav: 0,
+    });
+  };
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`);
+  }, [handleFav, handleNotFav]);
+
+  return (
+    <div className="single-product">
+      <h4>{nameProduct}</h4>
+      <div className="product-info">
+        <p>{category}</p>
+        <p>{manufacturer}</p>
+      </div>
+      <div className="product-merch">
+        <p>{quantityProduct}</p>
+        <p>{price} €</p>
+      </div>
+      <div>
+        {isFavorite === 0 ? (
+          <button type="button" onClick={handleFav}>
+            Ajouter à ta liste de souhaits
+          </button>
+        ) : (
+          <button type="button" onClick={handleNotFav}>
+            Retirer de la liste
+          </button>
+        )}
+      </div>
+    </div>
+  );
 }
+
+SingleProduct.propTypes = {
+  nameProduct: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  category: PropTypes.string.isRequired,
+  quantityProduct: PropTypes.number.isRequired,
+  manufacturer: PropTypes.string.isRequired,
+  isFavorite: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
+};

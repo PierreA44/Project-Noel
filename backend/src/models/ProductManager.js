@@ -32,17 +32,19 @@ class ProductManager extends AbstractManager {
   }
 
   async readAll() {
-    const [rows] = await this.database.query(`SELECT * FROM ${this.table}`);
+    const [rows] = await this.database.query(
+      `SELECT p.id, p.name, p.price, p.quantity, p.is_fav, m.name AS manufacturer, c.name AS category FROM ${this.table} AS p INNER JOIN manufacturer AS m ON m.id=p.manufacturer_id INNER JOIN category AS c ON c.id=p.category_id ORDER BY p.id ASC`
+    );
 
     return rows;
   }
 
   // U
 
-  async update(id, quantity, isWish) {
+  async update(id, quantity, isFav) {
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET quantity = ?, isWish = ? WHERE id = ?`,
-      [quantity, isWish, id]
+      `UPDATE ${this.table} SET quantity = ?, is_fav = ? WHERE id = ?`,
+      [quantity, isFav, id]
     );
 
     return result.affectedRows;

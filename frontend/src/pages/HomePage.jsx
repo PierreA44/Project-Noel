@@ -1,12 +1,11 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-
 export default function HomePage() {
   return (
     <>
-      <Navbar />
-      <h1>Bienvenue</h1>
-      <Outlet />
+      <h1>HO Ho ho !</h1>
+      <p>
+        Sélectionne des produits dans notre catalogue et créer ta liste pour le
+        Père-Noël!
+      </p>
     </>
   );
 }

@@ -4,17 +4,21 @@ import axios from "axios";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// import App from "./App";
+import App from "./App";
 import ProductsPage from "./pages/ProductsPage";
-import HomePage from "./pages/HomePage";
 import ManufacturersPage from "./pages/ManufacturersPage";
 import SantaListPage from "./pages/SantaListPage";
+import HomePage from "./pages/HomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <App />,
     children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
       {
         path: "/products",
         element: <ProductsPage />,
@@ -38,6 +42,12 @@ const router = createBrowserRouter([
       {
         path: "/santalist",
         element: <SantaListPage />,
+        loader: async () => {
+          const data = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/products`
+          );
+          return data;
+        },
       },
     ],
   },

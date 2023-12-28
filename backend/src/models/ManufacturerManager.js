@@ -24,11 +24,11 @@ class ManufacturerManager extends AbstractManager {
 
   async read(id) {
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE id = ?`,
+      `SELECT product.id, product.name FROM ${this.table} JOIN product ON manufacturer.id=product.manufacturer_id WHERE manufacturer.id = ?`,
       [id]
     );
 
-    return rows[0];
+    return rows;
   }
 
   async readAll() {
