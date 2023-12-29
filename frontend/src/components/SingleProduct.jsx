@@ -1,6 +1,5 @@
 import axios from "axios";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
 
 export default function SingleProduct({
   nameProduct,
@@ -10,6 +9,7 @@ export default function SingleProduct({
   manufacturer,
   isFavorite,
   id,
+  setIsUpdated,
 }) {
   const handleFav = () => {
     axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`, {
@@ -17,6 +17,7 @@ export default function SingleProduct({
       quantity: quantityProduct - 1,
       is_fav: 1,
     });
+    setIsUpdated(true);
   };
 
   const handleNotFav = () => {
@@ -25,11 +26,8 @@ export default function SingleProduct({
       quantity: quantityProduct + 1,
       is_fav: 0,
     });
+    setIsUpdated(true);
   };
-
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`);
-  }, [handleFav, handleNotFav]);
 
   return (
     <div className="single-product">
@@ -65,4 +63,5 @@ SingleProduct.propTypes = {
   manufacturer: PropTypes.string.isRequired,
   isFavorite: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
+  setIsUpdated: PropTypes.func.isRequired,
 };

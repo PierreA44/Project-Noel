@@ -1,3 +1,7 @@
+* {
+  text-transform: capitalize;
+}
+
 nav {
   background-color: cadetblue;
   padding: 0.5rem;

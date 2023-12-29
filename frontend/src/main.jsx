@@ -23,10 +23,16 @@ const router = createBrowserRouter([
         path: "/products",
         element: <ProductsPage />,
         loader: async () => {
-          const data = await axios.get(
+          const products = await axios.get(
             `${import.meta.env.VITE_BACKEND_URL}/api/products`
           );
-          return data;
+          const manufacturers = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/manufacturers`
+          );
+          const categories = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/categories`
+          );
+          return { products, manufacturers, categories };
         },
       },
       {
