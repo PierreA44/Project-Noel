@@ -39,11 +39,11 @@ const read = async (req, res, next) => {
 const edit = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, quantity, isWish } = req.body;
+    const { name, quantity, is_fav: isFav } = req.body;
     const updatedProduct = await tables.product.update(
       Number(id),
       Number(quantity),
-      Number(isWish)
+      isFav
     );
 
     if (updatedProduct == null) {
