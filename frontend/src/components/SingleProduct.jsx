@@ -30,23 +30,31 @@ export default function SingleProduct({
   };
 
   return (
-    <div className="single-product">
-      <h4>{nameProduct}</h4>
+    <div className="border-4 border-color2 bg-color1 text-color4 p-2 rounded-md">
+      <h4 className="text-2xl">{nameProduct}</h4>
       <div className="product-info">
-        <p>{category}</p>
-        <p>{manufacturer}</p>
+        <p>Catégorie : {category}</p>
+        <p>Fabricant : {manufacturer}</p>
       </div>
       <div className="product-merch">
-        <p>{quantityProduct}</p>
-        <p>{price} €</p>
+        <p>stock : {quantityProduct}</p>
+        <p>prix : {price} €</p>
       </div>
       <div>
         {isFavorite === 0 ? (
-          <button type="button" onClick={handleFav}>
+          <button
+            type="button"
+            onClick={handleFav}
+            className="bg-color2 px-2 py-1 mt-1 rounded-lg hover:bg-color4 hover:text-color2"
+          >
             Ajouter à ta liste de souhaits
           </button>
         ) : (
-          <button type="button" onClick={handleNotFav}>
+          <button
+            type="button"
+            onClick={handleNotFav}
+            className="bg-color2 px-2 py-1 mt-1 rounded-lg hover:bg-color4 hover:text-color2"
+          >
             Retirer de la liste
           </button>
         )}

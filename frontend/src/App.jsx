@@ -4,10 +4,10 @@ import "./App.css";
 
 function App() {
   return (
-    <>
+    <div className="bg-color4 text-color3">
       <Navbar />
       <Outlet />
-    </>
+    </div>
   );
 }
 

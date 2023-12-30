@@ -9,6 +9,7 @@ export default function ProductList({ products, manufacturers, categories }) {
   const [categorySelected, setCategorySelected] = useState("All");
   const [manufacturerSelected, setManufacturerSelected] = useState("All");
   const [searchValue, setSearchValue] = useState("");
+  const [priceValue, setPriceValue] = useState(0);
   const [isUpdated, setIsUpdated] = useState(false);
 
   const handleChangeCategory = (e) => {
@@ -19,8 +20,9 @@ export default function ProductList({ products, manufacturers, categories }) {
         (p) =>
           (category === "All" || p.category === category) &&
           (manufacturerSelected === "All" ||
-            p.category === manufacturerSelected) &&
-          p.name.toLowerCase().includes(searchValue)
+            p.manufacturer === manufacturerSelected) &&
+          p.name.toLowerCase().includes(searchValue) &&
+          p.price < priceValue
       )
     );
   };
@@ -31,9 +33,10 @@ export default function ProductList({ products, manufacturers, categories }) {
     setFilteredData(
       products.filter(
         (p) =>
-          (manufacturer === "All" || p.category === manufacturer) &&
+          (manufacturer === "All" || p.manufacturer === manufacturer) &&
           (categorySelected === "All" || p.category === categorySelected) &&
-          p.name.toLowerCase().includes(searchValue)
+          p.name.toLowerCase().includes(searchValue) &&
+          p.price < priceValue
       )
     );
   };
@@ -49,7 +52,25 @@ export default function ProductList({ products, manufacturers, categories }) {
           p.name.toLowerCase().includes(searchInput) &&
           (categorySelected === "All" || p.category === categorySelected) &&
           (manufacturerSelected === "All" ||
-            p.category === manufacturerSelected)
+            p.manufacturer === manufacturerSelected) &&
+          p.price < priceValue
+      )
+    );
+  };
+
+  const handleChangePrice = (e) => {
+    const price = Number(e.target.value);
+
+    setPriceValue(price);
+
+    setFilteredData(
+      products.filter(
+        (p) =>
+          p.price < price &&
+          p.name.toLowerCase().includes(searchValue) &&
+          (categorySelected === "All" || p.category === categorySelected) &&
+          (manufacturerSelected === "All" ||
+            p.manufacturer === manufacturerSelected)
       )
     );
   };
@@ -67,33 +88,68 @@ export default function ProductList({ products, manufacturers, categories }) {
   }, [isUpdated]);
 
   return (
-    <div className="product-list">
-      <h3>Produits en stock :</h3>
-      <div className="filters">
-        <input type="text" onChange={handleSearch} />
-        <label htmlFor="category">Choose a category</label>
-        <select name="category" onChange={handleChangeCategory}>
-          <option value="All">All</option>
-          {categories.map((c) => (
-            <option value={c.name} key={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="manufacturer">Choose a manufacturer</label>
-        <select name="manufacturer" onChange={handleChangeManufacturer}>
-          <option value="All">All</option>
-          {manufacturers.map((m) => (
-            <option value={m.name} key={m.id}>
-              {m.name}
-            </option>
-          ))}
-        </select>
-        <button type="button" onClick={() => setFilteredData(products)}>
-          reset
-        </button>
+    <div>
+      <h3 className="text-2xl p-4">Produits en stock :</h3>
+      <div className="border-color2 border-2 rounded-md p-2 mx-6">
+        <h4>Rechercher un produit :</h4>
+        <div className="flex flex-row justify-center gap-4 items-center">
+          <label htmlFor="product-name">Par son nom</label>
+          <input
+            type="text"
+            name="product-name"
+            onChange={handleSearch}
+            className="border-color1 border-2 rounded-md"
+          />
+          <label htmlFor="category">Par catégorie</label>
+          <select
+            name="category"
+            onChange={handleChangeCategory}
+            className="border-color1 border-2 rounded-md"
+          >
+            <option value="All">All</option>
+            {categories.map((c) => (
+              <option value={c.name} key={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="manufacturer">Par fabricant</label>
+          <select
+            name="manufacturer"
+            onChange={handleChangeManufacturer}
+            className="border-color1 border-2 rounded-md"
+          >
+            <option value="All">All</option>
+            {manufacturers.map((m) => (
+              <option value={m.name} key={m.id}>
+                {m.name}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="price">Par prix</label>
+          <input
+            type="range"
+            name="price"
+            min="0"
+            step="5"
+            className="border-color1 border-2 rounded-md"
+            onChange={handleChangePrice}
+          />
+          <button
+            type="button"
+            onClick={() => setFilteredData(products)}
+            className="bg-color2 text-color4 w-24 px-2 py-1 mt-1 rounded-lg hover:bg-color1"
+          >
+            Reset
+          </button>
+        </div>
       </div>
-      <div className="products">
+      <CreateProduct
+        manufacturers={manufacturers}
+        categories={categories}
+        setIsUpdated={setIsUpdated}
+      />
+      <div className="flex flex-row flex-wrap justify-center gap-4 m-4">
         {filteredData
           .filter((e) => e.quantity > 0)
           .map((e) => (
@@ -111,11 +167,6 @@ export default function ProductList({ products, manufacturers, categories }) {
             />
           ))}
       </div>
-      <CreateProduct
-        manufacturers={manufacturers}
-        categories={categories}
-        setIsUpdated={setIsUpdated}
-      />
     </div>
   );
 }

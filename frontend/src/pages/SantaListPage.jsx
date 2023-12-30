@@ -30,16 +30,17 @@ export default function SantalistPage() {
     setIsUpdated(true);
   };
   return (
-    <div>
-      <h1>Santalist</h1>
+    <div className="flex flex-col bg-color4 text-center h-screen">
+      <h2 className="text-color3 text-3xl p-4">Ma liste au Père-Noël</h2>
       <div>
         {favoriteData
           .filter((e) => e.is_fav === 1)
           .map((e) => (
-            <div key={e.id}>
-              <h3>{e.name}</h3>
+            <div key={e.id} className="flex flex-row items-center gap-6">
+              <h3 className="text-2xl p-4">- {e.name}</h3>
               <button
                 type="button"
+                className="bg-color2 text-color4 w-auto px-2 py-1 mt-1 rounded-lg hover:bg-color1"
                 onClick={() => handleClick(e.name, e.quantity, e.id)}
               >
                 supprimer de la liste

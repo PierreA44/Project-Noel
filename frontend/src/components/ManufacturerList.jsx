@@ -3,9 +3,7 @@ import SingleManufacturer from "./SingleManufacturer";
 
 export default function ManufacturerList({ data }) {
   return (
-    <div className="manufacturer-list">
-      <h1>Manufacturer liste</h1>
-
+    <div className="flex flex-row flex-wrap justify-center gap-4 m-4">
       {data.map((m) => (
         <SingleManufacturer
           id={m.id}
