@@ -32,7 +32,9 @@ class ProductManager extends AbstractManager {
   }
 
   async readAll() {
-    const [rows] = await this.database.query(`SELECT * FROM ${this.table}`);
+    const [rows] = await this.database.query(
+      `SELECT p.name, c.name AS category, m.name AS manufacturer, m.production_country AS country, p.price, p.quantity FROM ${this.table} AS p JOIN category AS c ON c.id=p.category_id JOIN manufacturer AS m ON m.id = p.manufacturer_id`
+    );
 
     return rows;
   }
