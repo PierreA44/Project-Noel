@@ -6,12 +6,14 @@
 const ProductManager = require("./models/ProductManager");
 const CategoryManager = require("./models/CategoryManager");
 const ManufacturerManager = require("./models/ManufacturerManager");
+const UserManager = require("./models/UserManager");
 
 const managers = [
   // Add other managers here
   ProductManager,
   CategoryManager,
   ManufacturerManager,
+  UserManager,
 ];
 
 // Create an empty object to hold data managers for different tables

@@ -10,6 +10,8 @@ const router = express.Router();
 const productRouter = require("./routers/productRouter");
 const categoryRouter = require("./routers/categoryRouter");
 const manufacturerRouter = require("./routers/manufacturerRouter");
+const userRouter = require("./routers/userRouter");
+const authRouter = require("./routers/authRouter");
 
 // Routes pour 'products'
 
@@ -22,6 +24,10 @@ router.use("/categories", categoryRouter);
 // Routes pour 'manufacturers'
 
 router.use("/manufacturers", manufacturerRouter);
+
+router.use("/user", userRouter);
+
+router.use("/auth", authRouter);
 
 /* ************************************************************************* */
 

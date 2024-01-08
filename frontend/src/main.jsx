@@ -9,6 +9,8 @@ import ProductsPage from "./pages/ProductsPage";
 import ManufacturersPage from "./pages/ManufacturersPage";
 import SantaListPage from "./pages/SantaListPage";
 import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
       },
       {
         path: "/products",

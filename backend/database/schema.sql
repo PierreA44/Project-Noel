@@ -9,6 +9,13 @@ CREATE TABLE `manufacturer` (
   `production_country` VARCHAR(150) NOT NULL
 );
 
+CREATE TABLE `user` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `email` VARCHAR(150) NOT NULL,
+  `hashed_password` VARCHAR(255) NOT NULL,
+  `is_admin` BOOLEAN NOT NULL DEFAULT 0
+);
+
 CREATE TABLE `product` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(150) NOT NULL,
